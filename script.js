@@ -23,19 +23,26 @@ var characters = {
 
 // generate random password based on user input
 function generatePassword() {
+  var checkboxMinimum = false;
   var selectedCharacterTypes = [];
   for (var i = 0; i < checkboxes.length; i++) {
     if (checkboxes[i].checked) {
       selectedCharacterTypes.push(checkboxes[i].value);
+      checkboxMinimum = true;
     }
   }
   var generatedPassword = '';
-  for (var i = 0; i < passwordLength; i++) {
-    randomKey = selectedCharacterTypes[Math.floor(Math.random() * selectedCharacterTypes.length)];
-    randomCharacter = characters[`${randomKey}`][Math.floor(Math.random() * characters[`${randomKey}`].length)];
-    generatedPassword = generatedPassword + randomCharacter;
+  if (checkboxMinimum) {
+    for (var i = 0; i < passwordLength; i++) {
+      randomKey = selectedCharacterTypes[Math.floor(Math.random() * selectedCharacterTypes.length)];
+      randomCharacter = characters[`${randomKey}`][Math.floor(Math.random() * characters[`${randomKey}`].length)];
+      generatedPassword = generatedPassword + randomCharacter;
+    }
+    return generatedPassword;
+  } else {
+    alert('Please select at least one character type!');
+    return '';
   }
-  return generatedPassword;
 }
 
 // Write password to the #password input
